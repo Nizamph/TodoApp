@@ -7,55 +7,73 @@
    <div>Nizam's todo list</div>
     <input id="input" type="text" placeholder="add a task">
     <input id="date-picker" type="date">
-    <button onclick="todoPushHandler()">press me </button>
+    <button onclick="addTodo()">press me </button>
     <div id="todo-item"></div>
   <script>
-  
+
+  //Model 
 let todos = [{
   id: 'id1',
   title:'get up early',
-  date:'20-10-2023'
+  date:'2023-9-21'
   },{
     id: 'id2',
     title:'complete course', 
-    date:'1-1-2019'
+    date:'2019-10-20'
   },{
     id:'id3',
     title:'Go to gym',
-    date:'1-2-2030'
+    date:'2020-3-5'
   }]
 
     render()
-     const todoPushHandler = () => {
-      document.getElementById('todo-item').innerHTML = ''
-    const title= document.getElementById('input').value
-                  document.getElementById('input').value = ''
-    const dueDate = document.getElementById('date-picker').value
-
-    const id = ''+new Date().getTime();//bug fixed
+    // Creates a todo 
+    const createTodo = (title, dueDate) => {
+      const id = ''+new Date().getTime();//bug fixed
       todos.push({
         id: id,
         title: title,
         date: dueDate
       }) 
-      render()
-     }
+    }
 
-     function deleteTodo(event) { 
-      
-      const deleteButton  = event.target;
-      const idToDelete = deleteButton.id;
-  todos = todos.filter((todo)=> {
+   // Delete a todo 
+   const removeTodo = (idToDelete) => {
+    todos = todos.filter((todo)=> {
      return todo.id !== idToDelete
   });
-  render();
-}
+   }
 
+
+   //controller
+     const addTodo = () => {
+     const textbox =  document.getElementById('input')
+     const title = textbox.value
+    const datePicker = document.getElementById('date-picker')
+    const dueDate = datePicker.value
+   if(title.trim() !== "" && dueDate.trim() !=="") {
+    createTodo(title, dueDate)
+      render()
+   }
+     }
+
+
+     function deleteTodo(event) { 
+      const deleteButton  = event.target;
+      const idToDelete = deleteButton.id;
+      
+      removeTodo(idToDelete)
+      render();
+}
+    
+
+    //view
     function render(){
       document.getElementById('todo-item').innerHTML = '';
       todos.forEach((todo) => {
     let element =  document.createElement('div');
     element.innerText = todo.title+ ' ' +todo.date;
+
     
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'Delete';
@@ -63,6 +81,7 @@ let todos = [{
     deleteButton.onclick = deleteTodo;
     deleteButton.id = todo.id;
     element.appendChild(deleteButton);
+ 
 
     let todoItem = document.getElementById('todo-item')
       todoItem.appendChild(element)
