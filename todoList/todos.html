@@ -41,12 +41,35 @@ let todos = [{
       render()
      }
 
+     function deleteTodo(event) { 
+      
+      const deleteButton  = event.target;
+      const idToDelete = deleteButton.id;
+
+  todos = todos.filter((todo)=> {
+    if(todo.id === idToDelete) {
+      return false
+    }else {
+      return true
+    }
+  });
+
+  render();
+}
+
     function render(){
       document.getElementById('todo-item').innerHTML = '';
       todos.forEach((todo) => {
     let element =  document.createElement('div');
     element.innerText = todo.title+ ' ' +todo.date;
-  
+    
+    const deleteButton = document.createElement('button')
+    deleteButton.innerText = 'Delete';
+    deleteButton.style = 'margin-left: 12px';
+    deleteButton.onclick = deleteTodo;
+    deleteButton.id = todo.id;
+    element.appendChild(deleteButton);
+
     let todoItem = document.getElementById('todo-item')
       todoItem.appendChild(element)
       })
