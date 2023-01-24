@@ -4,7 +4,53 @@
   <title> To do list</title>
 </head>
 <body>
+   <div>Nizam's todo list</div>
+    <input id="input" type="text" placeholder="add a task">
+    <input id="date-picker" type="date">
+    <button onclick="todoPushHandler()">press me </button>
+    <div id="todo-item"></div>
   <script>
+
+let todos = [{
+  id: 'id1',
+  title:'get up early',
+  date:'20-10-2023'
+  },{
+    id: 'id2',
+    title:'complete course', 
+    date:'1-1-2019'
+  },{
+    id:'id3',
+    title:'Go to gym',
+    date:'1-2-2030'
+  }]
+
+    render()
+     const todoPushHandler = () => {
+      document.getElementById('todo-item').innerHTML = ''
+    const title= document.getElementById('input').value
+
+    const dueDate = document.getElementById('date-picker').value
+
+    const id = new Date().getTime();
+      todos.push({
+        id: id,
+        title: title,
+        date: dueDate
+      }) 
+      render()
+     }
+
+    function render(){
+      document.getElementById('todo-item').innerHTML = '';
+      todos.forEach((todo) => {
+    let element =  document.createElement('div');
+    element.innerText = todo.title+ ' ' +todo.date;
+  
+    let todoItem = document.getElementById('todo-item')
+      todoItem.appendChild(element)
+      })
+    } 
 
   </script>
 </body>
