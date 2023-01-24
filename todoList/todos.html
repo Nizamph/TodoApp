@@ -10,7 +10,7 @@
     <button onclick="todoPushHandler()">press me </button>
     <div id="todo-item"></div>
   <script>
-
+  
 let todos = [{
   id: 'id1',
   title:'get up early',
@@ -29,10 +29,10 @@ let todos = [{
      const todoPushHandler = () => {
       document.getElementById('todo-item').innerHTML = ''
     const title= document.getElementById('input').value
-
+                  document.getElementById('input').value = ''
     const dueDate = document.getElementById('date-picker').value
 
-    const id = new Date().getTime();
+    const id = ''+new Date().getTime();//bug fixed
       todos.push({
         id: id,
         title: title,
@@ -45,15 +45,9 @@ let todos = [{
       
       const deleteButton  = event.target;
       const idToDelete = deleteButton.id;
-
   todos = todos.filter((todo)=> {
-    if(todo.id === idToDelete) {
-      return false
-    }else {
-      return true
-    }
+     return todo.id !== idToDelete
   });
-
   render();
 }
 
